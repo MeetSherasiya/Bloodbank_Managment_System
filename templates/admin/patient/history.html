@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+
+{% block navbar_pages %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+    <li class="breadcrumb-item active"><a href="javascript:void(0)">Request History</a></li>
+</ol>
+{% endblock navbar_pages %}
+
+{% block body %}
+<div class="row justify-content-center mt-2">
+    <div class="col-xl-12">
+        <div class="form-input-content">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>{{message}}</div>
+            {% endfor %}
+            <div class="card login-form mb-0">
+                <div class="card-body">
+                    <div class="card-title text-primary">Request History</div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration text-center text-dark">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Pateint Name</th>
+                                    <th>Patient Age</th>
+                                    <th>Phone Number</th>
+                                    <th>Reason</th>
+                                    <th class="text-danger">BloodGroup</th>
+                                    <th>Unit</th>
+                                    <th>Progress</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in historys %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{history.patient_name}}</td>
+                                    <td>{{history.patient_age}}</td>
+                                    <td>{{history.user.phone}}</td>
+                                    <td>{{history.reason}}</td>
+                                    <td class="text-danger">{{history.bloodgroup}}</td>
+                                    <td>{{history.unit}}</td>
+                                    <td><span class="badge {% if history.progress == 'Pending' %}badge-warning{% elif history.progress == 'Approved' %}badge-success{% elif history.progress == 'Reject' %}badge-danger{% endif %} font-weight-bold">{{history.progress}}</span></td>
+                                    <td>{{ history.created_at}}</td>
+                                    <td class="d-flex justify-content-center"><a href="{% url 'edit_blood_request' history.id %}" class="btn btn-info btn-xs mr-2"><span class="material-symbols-outlined text-white">edit</span></a>
+                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModalCenter-{{history.id}}"><span class="material-symbols-outlined text-white">delete</span></button>
+                                            <div class="modal fade" id="exampleModalCenter-{{history.id}}" style="display: none;" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Delete Request</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"><span>×</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p>Are You Sure To Delete Request of {{history.patient_name}}.</p>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            <a href="{% url 'delete_blood_request' history.id %}" type="button" class="btn btn-primary">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

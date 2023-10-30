@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block navbar_pages %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Blood</a></li>
+    <li class="breadcrumb-item active"><a href="javascript:void(0)">Request</a></li>
+</ol>
+{% endblock navbar_pages %}
+
+{% block body %}
+
+<div class="row justify-content-center mt-2">
+    <div class="col-xl-6">
+        <div class="form-input-content">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>{{message}}</div>
+            {% endfor %}
+            <div class="card login-form mb-0">
+                <div class="card-body">
+                    <h4 class="text-center"><span class="material-symbols-outlined mr-2" style="vertical-align:text-bottom;">bloodtype</span>Blood Request</h4>
+
+                    <form class="mt-4 mb-3 login-input" method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="{{ form.patient_name.id_for_label }}" class="form-label text-primary">Patient Name*</label>
+                            <input type="text" class="form-control" id="{{ form.patient_name.id_for_label }}" name="{{ form.patient_name.name }}" value="{{form.patient_name.value}}" placeholder="Enter Patient Name" required>
+                            {% if form.patient_name.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.patient_name.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.patient_age.id_for_label }}" class="form-label text-primary">Patient Age*</label>
+                            <input type="number" class="form-control" id="{{ form.patient_age.id_for_label }}" name="{{ form.patient_age.name }}" value="{{form.patient_age.value}}" placeholder="Enter Patient Age" min="0" max="150" required>
+                            {% if form.patient_age.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.patient_age.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.reason.id_for_label }}" class="form-label text-primary">Reason For Blood*</label>
+                            <input type="text" class="form-control" id="{{ form.reason.id_for_label }}" name="{{ form.reason.name }}" value="{{form.reason.value}}" placeholder="Enter Reason for Blood" required>
+                            {% if form.reason.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.reason.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.bloodgroup.id_for_label }}" class="form-label text-primary">Blood Group*</label>
+                            <select class="form-control" id="{{ form.bloodgroup.id_for_label }}" name="{{ form.bloodgroup.name }}" required>
+                                <option value="" disabled {% if not form.bloodgroup.value %}selected{% endif %}>Blood Group Select</option>
+                                {% for values in bloodGroup %}
+                                    <option value="{{ values }}" {% if form.bloodgroup.value == values %}selected{% endif %}>{{ values }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if form.bloodgroup.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.bloodgroup.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.progress.id_for_label }}" class="form-label text-primary">Progress*</label>
+                            <select class="form-control" id="{{ form.progress.id_for_label }}" name="{{ form.progress.name }}" required>
+                                <option value="" disabled {% if not form.progress.value %}selected{% endif %}>Progress</option>
+                                {% for values in progress %}
+                                    <option value="{{ values }}" {% if form.progress.value == values %}selected{% endif %}>{{ values }}</option>
+                                {% endfor %}
+                            </select>
+                            {% if form.progress.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.progress.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.unit.id_for_label }}" class="form-label text-primary">Unit (ml)*</label>
+                            <input type="text" class="form-control" id="{{ form.unit.id_for_label }}" name="{{ form.unit.name }}" placeholder="Enter Unit" value="{{form.unit.value}}" min="0" required>
+                            {% if form.unit.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.unit.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn login-form__btn submit mr-3">Submit</button>
+                            <button type="cancle" class="btn btn-light">Cancle</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block navbar_pages %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+    <li class="breadcrumb-item active"><a href="javascript:void(0)">Donor Pending Request</a></li>
+</ol>
+{% endblock navbar_pages %}
+
+{% block body %}
+<div class="row justify-content-center mt-2">
+    <div class="col-xl-12">
+        <div class="form-input-content">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>{{message}}</div>
+            {% endfor %}
+            <div class="card login-form mb-0">
+                <div class="card-body">
+                    <div class="card-title text-primary">Pending Request</div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration text-center text-dark">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Pateint Name</th>
+                                    <th>Patient Age</th>
+                                    <th>Phone Number</th>
+                                    <th>Disease</th>
+                                    <th class="text-danger">BloodGroup</th>
+                                    <th>Unit</th>
+                                    <th>Progress</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in historys %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{history.patient_name}}</td>
+                                    <td>{{history.patient_age}}</td>
+                                    <td>{{history.user.phone}}</td>
+                                    <td>{{history.disease}}</td>
+                                    <td class="text-danger">{{history.bloodgroup}}</td>
+                                    <td>{{history.unit}}</td>
+                                    <td><span class="badge {% if history.progress == 'Pending' %}badge-warning{% elif history.progress == 'Approved' %}badge-success{% elif history.progress == 'Reject' %}badge-danger{% endif %} font-weight-bold">{{history.progress}}</span></td>
+                                    <td>{{ history.created_at}}</td>
+                                    <td class="d-flex justify-content-center"><a href="{% url 'approved_request_donor' history.id %}" class="btn btn-success btn-xs mr-2"><span class="material-symbols-outlined text-white">done</span></a><a href="{% url 'reject_request_donor' history.id %}" class="btn btn-danger btn-xs"><span class="material-symbols-outlined text-white">close</span></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

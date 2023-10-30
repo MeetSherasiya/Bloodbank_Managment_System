@@ -1,0 +1,250 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Blood Bank Managment</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        #main-wrapper {
+            flex: 1;
+        }
+
+        .content-body {
+            flex: 1;
+            padding: 20px; /* Adjust as needed */
+            box-sizing: border-box;
+        }
+    
+        .footer {
+            margin-top: auto;
+        }
+    </style>
+    
+
+</head>
+
+<body>
+
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+
+    <!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+
+        <!--**********************************
+            Nav header start
+        ***********************************-->
+        <div class="nav-header">
+            <div class="brand-logo h-100">
+                <a class="d-flex align-items-center justify-content-center p-0 h-100">
+                <b class="logo-abbr"><span class="material-symbols-outlined text-white" style="font-size:x-large; font-weight:100;">healing</span></b>
+                <span class="logo-compact">Blood Bank Managment</span>
+                <span class="brand-title">
+                    <h5 class="text-white pt-1">Blood Bank Managment</h5>
+                </span>
+                </a>
+            </div>
+        </div>
+        <!--**********************************
+            Nav header end
+        ***********************************-->
+
+        <!--**********************************
+            Header start
+        ***********************************-->
+        <div class="header">
+            <div class="header-content clearfix">
+
+                <div class="nav-control d-flex">
+                    <div class="hamburger">
+                        <span class="toggle-icon"><i class="icon-menu"></i></span>
+                    </div>
+                    <h4 class="mt-2 ml-2 d-none d-md-block">Welcome, <strong>{{request.user}}</strong></h4>
+                </div>
+
+                <div class="header-right mr-2">
+                    <ul class="clearfix">
+                        <li class="icons dropdown">
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="{% static 'images/user/6.jpg' %}" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile dropdown-menu w-auto">
+                                <div class="dropdown-content-body">
+                                    <ul class="list-unstyled">
+                                        <li>Profile</li>
+                                        <li>
+                                            <a href="#"><i class="icon-user"></i> <span>Profile</span></a>
+                                        </li>
+                                        <hr class="my-2">
+                                        <li>Settings</li>
+                                        <li><a href="{% url 'logout' %}"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--**********************************
+            Header end ti-comment-alt
+        ***********************************-->
+
+        <!--**********************************
+            Sidebar start
+        ***********************************-->
+        <div class="nk-sidebar">
+            <div class="nk-nav-scroll">
+                <ul class="metismenu" id="menu">
+                    <li class="nav-label text-dark font-weight-bold">Dashboard</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="material-symbols-outlined menu-icon">dashboard</i><span class="nav-text">Dashboard</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/" {% if request.resolver_match.url_name == 'patient-dashboard' %}class="text-primary"{% endif %}><i class="material-symbols-outlined menu-icon">home</i>Home</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-label text-dark font-weight-bold">Blood</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="material-symbols-outlined menu-icon text-secondary">bloodtype</i><span class="nav-text">Blood</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'blood-request' %}" class="{% if request.resolver_match.url_name == 'blood-request' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">heart_plus</i>Request</a></li>
+                            <li><a href="{% url 'blood-history' %}" class="{% if request.resolver_match.url_name == 'blood-history' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">history</i>History</a></li>
+                        </ul>
+                    </li>
+                    {% for group in user.groups.all %}
+                        {% if group.name == 'Donor' or group.name == 'Admin' %}
+                    <li class="nav-label text-dark font-weight-bold">Donor</li>
+                    <li>
+                        <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                            <i class="material-symbols-outlined menu-icon">vaccines</i><span class="nav-text">Donor</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="{% url 'donor-blood-request' %}" class="{% if request.resolver_match.url_name == 'donor-blood-request' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">heart_plus</i>Request</a></li>
+                            <li><a href="{% url 'donor-blood-history' %}" class="{% if request.resolver_match.url_name == 'donor-blood-history' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">history</i>History</a></li>
+                        </ul>
+                    </li>
+                        {% endif %}
+                        {% if group.name == "Admin" %}
+                        <li class="nav-label text-dark font-weight-bold">Admin</li>
+                        <li>
+                            <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                <i class="material-symbols-outlined menu-icon">stethoscope</i><span class="nav-text">Admin</span>
+                            </a>
+                            <ul aria-expanded="false">
+                                <li>
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <i class="material-symbols-outlined menu-icon text-secondary">bloodtype</i><span class="nav-text">Blood</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li><a href="{% url 'pending_request_patient' %}" class="{% if request.resolver_match.url_name == 'pending_request_patient' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">heart_plus</i>Pending Request List</a></li>
+                                        <li><a href="{% url 'history_request_patient' %}" class="{% if request.resolver_match.url_name == 'history_request_patient' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">history</i>History</a></li>
+                                        <li><a href="{% url 'pateint_details' %}" class="{% if request.resolver_match.url_name == 'pateint_details' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">badge</i>User Details</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                                        <i class="material-symbols-outlined menu-icon">vaccines</i><span class="nav-text">Donor</span>
+                                    </a>
+                                    <ul aria-expanded="false">
+                                        <li><a href="{% url 'pending_request_donor' %}" class="{% if request.resolver_match.url_name == 'pending_request_donor' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">heart_plus</i>Pending Request List</a></li>
+                                        <li><a href="{% url 'history_request_donor' %}" class="{% if request.resolver_match.url_name == 'history_request_donor' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">history</i>History</a></li>
+                                        <li><a href="{% url 'donor_details' %}" class="{% if request.resolver_match.url_name == 'donor_details' %}text-primary{% endif %}"><i class="material-symbols-outlined menu-icon">badge</i>User Details</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <!--**********************************
+            Sidebar end
+        ***********************************-->
+
+        <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+
+            <div class="row page-titles mx-0">
+                <div class="col p-md-0">
+                    {% block navbar_pages %}{% endblock navbar_pages %}
+                </div>
+            </div>
+            <!-- row -->
+
+            <div class="container-fluid">
+                {% block body %}{% endblock body %}
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://meetsherasiya.me/" target="_blank">Meet Sherasiya</a> 2023</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+
+    <script src="{% static 'plugins/tables/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'plugins/tables/js/datatable-init/datatable-basic.min.js' %}"></script>
+
+</body>
+</html>

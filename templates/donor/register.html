@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Blood Bank Managment</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+</head>
+
+<body class="h-100">
+    
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body">
+                                <a class="text-center" href="#"> <h4>Donar Register</h4></a>
+                                <form class="mt-5 mb-3 login-input" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="{{ form.email.id_for_label }}" class="form-label text-primary">Email</label>
+                                        <input type="email" class="form-control" id="{{ form.email.id_for_label }}" name="{{ form.email.name }}" placeholder="Enter Email">
+                                        {% if form.email.errors %}
+                                            <div class="text-danger">
+                                                {% for error in form.email.errors %}
+                                                {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="{{ form.phone.id_for_label }}" class="form-label text-primary">Phone Number</label>
+                                        <input type="number" class="form-control" id="{{ form.phone.id_for_label }}" name="{{ form.phone.name }}" placeholder="Enter Phone Number" min="999999999" max="9999999999">
+                                        <span id="phoneError" style="color: red;">Phone Number Must Be 10</span>
+                                        {% if form.phone.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.phone.errors %}
+                                            {{ error }}
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="{{ form.password1.id_for_label }} text-primary">Password</label>
+                                        <input type="password" class="form-control" id="{{ form.password1.id_for_label }}" name="{{ form.password1.name }}" placeholder="Enter Password">
+                                        {% if form.password1.errors %}
+                                            <div class="text-danger">
+                                                {% for error in form.password1.errors %}
+                                                {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password" class="{{ form.password2.id_for_label }} text-primary">Confirm Password</label>
+                                        <input type="password" class="form-control" id="{{ form.password2.id_for_label }}" name="{{ form.password2.name }}" placeholder="Enter Password">
+                                        {% if form.password2.errors %}
+                                            <div class="text-danger">
+                                                {% for error in form.password2.errors %}
+                                                {{ error }}
+                                                {% endfor %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <button type="submit" class="btn login-form__btn submit w-100">Register</button>
+                                </form>
+                                <p class="login-form__footer text-center">You have account? <a href="{% url 'patient-login' %}" class="text-primary">Log in</a></p>
+                                <p class="login-form__footer text-center"><span class="material-symbols-outlined mr-2 text-primary">bloodtype</span><a href="{% url 'patient-register' %}" class="text-primary" style="vertical-align: super;">Patient Register</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+</body>
+</html>

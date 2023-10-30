@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Blood Bank Managment</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static './images/favicon.png' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    
+</head>
+
+<body class="h-100">
+    
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>{{message}}</div>
+                        {% endfor %}
+                        <div class="card login-form mb-0">
+                            <div class="card-body">
+                                <a class="text-center" href="#"> <h4>Login</h4></a>
+
+                                <form class="mt-5 mb-3 login-input" method="POST">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="email" class="text-primary">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password" class="text-primary">Password</label>
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+                                    </div>
+                                    <button type="submit" class="btn login-form__btn submit w-100">Sign In</button>
+                                </form>
+                                <p class="login-form__footer text-center"><span class="material-symbols-outlined mr-2 text-primary">bloodtype</span><a href="{% url 'patient-register' %}" class="text-primary" style="vertical-align: super;">Patient Register</a></p>
+                                <p class="login-form__footer text-center"><span class="material-symbols-outlined mr-2 text-primary">vaccines</span><a href="{% url 'donor-register' %}" class="text-primary" style="vertical-align: super;">Donor Register</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="{% static 'plugins/common/common.min.js' %}"></script>
+    <script src="{% static 'js/custom.min.js' %}"></script>
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script src="{% static 'js/gleek.js' %}"></script>
+    <script src="{% static 'js/styleSwitcher.js' %}"></script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+{% block navbar_pages %}
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="javascript:void(0)">Admin</a></li>
+    <li class="breadcrumb-item active"><a href="javascript:void(0)">Pateint Details</a></li>
+</ol>
+{% endblock navbar_pages %}
+
+{% block body %}
+<div class="row justify-content-center mt-2">
+    <div class="col-xl-12">
+        <div class="form-input-content">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>{{message}}</div>
+            {% endfor %}
+            <div class="card login-form mb-0">
+                <div class="card-body">
+                    <div class="card-title text-primary">Pateint Details</div>
+                    <div class="table-responsive">
+                        <table class="table zero-configuration text-center text-dark">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Email</th>
+                                    <th>Phone Number</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for history in historys %}
+                                <tr>
+                                    <td>{{forloop.counter}}</td>
+                                    <td>{{history.email}}</td>
+                                    <td>{{history.phone}}</td>
+                                    <td>{{ history.date_joined}}</td>
+                                    <td class="d-flex justify-content-center"><a href="#" class="btn btn-info btn-xs mr-2"><span class="material-symbols-outlined text-white">edit</span></a><a href="#" class="btn btn-danger btn-xs"><span class="material-symbols-outlined text-white">delete</span></a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}

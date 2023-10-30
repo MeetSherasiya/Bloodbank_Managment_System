@@ -61,35 +61,34 @@ Once `pip` has finished downloading the dependencies:
 
 ## Login Credentials For Admin Access
 
-Email : admin@admin.com
+Email : admin@admin.com<br>
 Password : admin@1234
 
 # Software Pages Screenshot
 
 ## Dashboard Page
 
-<img src='screenshots/homepage.png' >
+<img src='screenshot/homepage.png' >
 
 ## Patient Login Page
 
-<img src='screenshots/patient_register.png' >
+<img src='screenshot/patient_register.png' >
 
 ## Donor Login Page
 
-<img src='screenshots/donor_register.png' >
+<img src='screenshot/donor_register.png' >
 
 ## Patient Request Page
 
-<img src='screenshots/blood_request.png' >
+<img src='screenshot/blood_request.png' >
 
 ## Donor Request Page
 
-<img src='screenshots/blood_donate_request.png' >
+<img src='screenshot/blood_donate_request.png' >
 
 ## Patient Details Page
 
-<img src='screenshots/patient_details.png' >
+<img src='screenshot/patient_details.png' >
 
 ## Donor Details Page
-
-<img src='screenshots/donor_details.png' >
+<img src='screenshot/donor_details.png' >
